@@ -10,13 +10,13 @@ config = dv2.defaults.update({
     'log_every': 1e3,
     'log_keys_video': ['rgb'],
     'train_every': 10,
-    'prefill': 1e5,
+    'prefill': 1e2,
     'actor_ent': 3e-3,
     'loss_scales.kl': 1.0,
     'discount': 0.99,
     'task': 'igibson',
-    'encoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb'},
-    'decoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb'},
+    'encoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb', 'cnn_depth': 10},
+    'decoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb', 'cnn_depth': 10},
     'action_repeat': 2,
     'eval_every': 1e4,
     'prefill': 100,
@@ -31,13 +31,10 @@ config = dv2.defaults.update({
     'critic_opt': {'lr' : 8e-5},
     'actor_ent': 1e-4,
     'kl': {'free' : 1.0},
+    'replay': {'capacity': 100}
 }).parse_flags()
 
-env_config = os.path.join(igibson.root_path, "examples/configs/behavior_onboard_sensing_fetch.yaml")
+env_config = os.path.join(igibson.root_path, "examples/configs/behavior_onboard_sensing.yaml")
 env = BehaviorEnv(env_config)
 # env = gym_minigrid.wrappers.RGBImgPartialObsWrapper(env)
-@profile
-def my_func():
-    dv2.train(env, config)
-
-my_func()
+dv2.train(env, config)
