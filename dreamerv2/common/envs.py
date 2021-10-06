@@ -447,6 +447,8 @@ class ResizeImage:
     self._keys = [
         k for k, v in env.obs_space.items()
         if len(v.shape) > 1 and v.shape[:2] != size]
+    # import pdb; pdb.set_trace()
+    self._keys = ['rgb']
     print(f'Resizing keys {",".join(self._keys)} to {self._size}.')
     if self._keys:
       from PIL import Image
@@ -481,6 +483,8 @@ class ResizeImage:
     return obs
 
   def _resize(self, image):
+    image *= 256
+    image = image.astype(np.uint8)
     image = self._Image.fromarray(image)
     image = image.resize(self._size, self._Image.NEAREST)
     image = np.array(image)

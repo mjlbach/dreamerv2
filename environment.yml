@@ -1,0 +1,17 @@
+name: dreamer-v2
+channels: 
+  - nvidia
+  - conda-forge
+  - defaults 
+dependencies: 
+  - cudatoolkit=11.2
+  - cudnn
+  - gym[atari]
+  - atari_py
+  - pip
+  - pip: 
+    - tensorflow
+    - tensorflow_probability
+    - dm_control
+    - ruamel.yaml
+    - crafter
