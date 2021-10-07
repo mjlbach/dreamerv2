@@ -483,7 +483,7 @@ class ResizeImage:
     return obs
 
   def _resize(self, image):
-    image *= 256
+    image *= 255
     image = image.astype(np.uint8)
     image = self._Image.fromarray(image)
     image = image.resize(self._size, self._Image.NEAREST)

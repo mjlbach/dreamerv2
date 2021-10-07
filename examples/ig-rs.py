@@ -16,10 +16,12 @@ config = dv2.defaults.update({
     'loss_scales.kl': 1.0,
     'discount': 0.99,
     'task': 'igibson',
+    'render_size': [128, 128],
     'encoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb' },
     'decoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb' },
     'action_repeat': 2,
     'eval_every': 1e4,
+    'expl_behavior': 'Plan2Explore',
     'prefill': 100, # 1000 dmc_vision
     'pretrain': 100,
     'clip_rewards': 'identity',

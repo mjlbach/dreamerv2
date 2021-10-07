@@ -1,5 +1,5 @@
 # scene
-scene_id: Beechwood_1_int
+scene_id: Rs_int
 clutter: false
 build_graph: true
 load_texture: true
@@ -14,7 +14,7 @@ object_randomization_freq: null
 robot: BehaviorRobot
 
 # task
-task: cleaning_cupboards
+task: re-shelving_library_books_simplified_1
 task_id: 0
 online_sampling: false
 target_dist_min: 1.0
