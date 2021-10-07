@@ -8,6 +8,7 @@ from memory_profiler import profile
 
 # taken from dmc_vision
 config = dv2.defaults.update({
+    'jit': True,
     'logdir': '~/logdir/igibson-plan2xplore',
     'log_every': 1e3,
     'log_keys_video': ['rgb'],
@@ -17,8 +18,8 @@ config = dv2.defaults.update({
     'discount': 0.99,
     'task': 'igibson',
     'render_size': [128, 128],
-    'encoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb' },
-    'decoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb' },
+    'encoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb', 'cnn_kernels': (4, 4, 4, 4)  },
+    'decoder': { 'mlp_keys': '$^', 'cnn_keys': 'rgb', 'cnn_kernels': (4, 6, 6, 6, 10) },
     'action_repeat': 2,
     'eval_every': 1e4,
     'expl_behavior': 'Plan2Explore',

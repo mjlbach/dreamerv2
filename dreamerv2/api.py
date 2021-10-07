@@ -5,6 +5,7 @@ import pathlib
 import re
 import sys
 import warnings
+import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 logging.getLogger().setLevel('ERROR')
@@ -33,6 +34,7 @@ defaults = common.Config(configs.pop('defaults'))
 
 def train(env, config, outputs=None):
 
+  tf.config.experimental_run_functions_eagerly(not config.jit)
   logdir = pathlib.Path(config.logdir).expanduser()
   logdir.mkdir(parents=True, exist_ok=True)
   config.save(logdir / 'config.yaml')
