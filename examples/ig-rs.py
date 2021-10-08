@@ -8,7 +8,7 @@ from memory_profiler import profile
 
 # taken from dmc_vision
 config = dv2.defaults.update({
-    'jit': False,
+    'jit': True,
     'logdir': '~/logdir/igibson-plan2xplore',
     'log_every': 1e3,
     'log_keys_video': ['rgb'],
