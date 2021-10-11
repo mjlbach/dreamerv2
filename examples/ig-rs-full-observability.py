@@ -5,6 +5,10 @@ import dreamerv2.api as dv2
 from igibson.envs.behavior_reward_shaping_env import BehaviorRewardShapingEnv
 # from igibson.envs.behavior_env import BehaviorEnv
 
+import tensorflow as tf
+physical_devices = tf.config.list_physical_devices('GPU') 
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
 # taken from dmc_vision
 config = dv2.defaults.update({
     'jit': True,
@@ -22,7 +26,7 @@ config = dv2.defaults.update({
     'action_repeat': 2,
     'eval_every': 1e4,
     'expl_behavior': 'Plan2Explore',
-    'prefill': 100, # 1000 dmc_vision
+    'prefill': 1000, # 1000 dmc_vision
     'pretrain': 100,
     'clip_rewards': 'identity',
     'pred_discount': False,
