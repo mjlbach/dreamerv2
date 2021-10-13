@@ -438,6 +438,43 @@ class OneHotAction:
     reference[index] = 1.0
     return reference
 
+class ConvertImage:
+
+  def __init__(self, env, size=(128, 128)):
+    self._env = env
+    self._size = size
+    self._keys = [
+        k for k, v in env.obs_space.items()
+        if len(v.shape) > 1 and v.dtype != np.uint8]
+    print(f'Converting keys {",".join(self._keys)} to floats.')
+
+  def __getattr__(self, name):
+    if name.startswith('__'):
+      raise AttributeError(name)
+    try:
+      return getattr(self._env, name)
+    except AttributeError:
+      raise ValueError(name)
+
+  @property
+  def obs_space(self):
+    spaces = self._env.obs_space
+    for key in self._keys:
+      shape = self._size + spaces[key].shape[2:]
+      spaces[key] = gym.spaces.Box(0, 255, shape, np.uint8)
+    return spaces
+
+  def step(self, action):
+    obs = self._env.step(action)
+    for key in self._keys:
+      obs[key] = (obs[key] * 255).astype(np.uint8)
+    return obs
+
+  def reset(self):
+    obs = self._env.reset()
+    for key in self._keys:
+      obs[key] = (obs[key] * 255).astype(np.uint8)
+    return obs
 
 class ResizeImage:
 
@@ -447,8 +484,9 @@ class ResizeImage:
     self._keys = [
         k for k, v in env.obs_space.items()
         if len(v.shape) > 1 and v.shape[:2] != size]
-    print(f'Resizing keys {",".join(self._keys)} to {self._size}.')
     if self._keys:
+      print(f'Resizing keys {",".join(self._keys)} to {self._size}.')
+      import pdb; pdb.set_trace()
       from PIL import Image
       self._Image = Image
 
